@@ -12,7 +12,7 @@ public class PoolData
     public PoolData(GameObject obj, GameObject poolObj)
     {
         fatherObj = new GameObject(obj.name);
-        fatherObj.transform.parent = poolObj.transform;
+        fatherObj.transform.SetParent(poolObj.transform, false);
         poolList = new List<GameObject>();
         PushObj(obj);
     }
@@ -21,7 +21,7 @@ public class PoolData
     {
         obj.SetActive(false);
         poolList.Add(obj);
-        obj.transform.parent = fatherObj.transform;
+        obj.transform.SetParent(fatherObj.transform, false);
     }
 
     public GameObject GetObj()
@@ -30,7 +30,7 @@ public class PoolData
         obj = poolList[0];
         poolList.RemoveAt(0);
         obj.SetActive(true);
-        obj.transform.parent = null;
+        obj.transform.SetParent(null, false);
         return obj;
     }
 

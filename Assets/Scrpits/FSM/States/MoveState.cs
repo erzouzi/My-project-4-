@@ -39,6 +39,12 @@ public class MoveState : BaseState
             fsm.SwitchType(StateType.Defence);
             return;
         }
+        if (pc.skillInput)
+        {
+            pc.skillInput = false;
+            fsm.SwitchType(StateType.Skill);
+            return;
+        }
 
         animator.SetFloat("Movement", pc.setMovement);
         if (pc.setMovement < 0.1f)

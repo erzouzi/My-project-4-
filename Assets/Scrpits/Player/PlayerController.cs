@@ -43,7 +43,15 @@ public class PlayerController : UnitController
     private float targetMovement;
     private float velocity;
     [HideInInspector]
+    public int SkillType;
+
+    [HideInInspector]
     public int comboIndex;
+    [HideInInspector]
+    public bool skillInput;
+    [HideInInspector]
+    public int skillHitIndex;
+
     [HideInInspector]
     public bool attackInput;
     [HideInInspector]
@@ -65,6 +73,7 @@ public class PlayerController : UnitController
         fsm.AddState(StateType.Hit, new HitState(fsm));
         fsm.AddState(StateType.Defence, new DefenceState(fsm));
         fsm.AddState(StateType.Die, new DeadState(fsm));
+        fsm.AddState(StateType.Skill, new SkillState(fsm));
         fsm.SwitchType(StateType.Idle);
     }
 
@@ -82,7 +91,9 @@ public class PlayerController : UnitController
 
         fsm.OnUpdate();
 
-        if (fsm.CurType == StateType.Attack || fsm.CurType == StateType.Defence)
+        if (fsm.CurType == StateType.Attack
+            || fsm.CurType == StateType.Defence
+            || fsm.CurType == StateType.Skill)
         {
             var nearest = FindNearestEnemy();
             if (nearest != null)
@@ -91,7 +102,7 @@ public class PlayerController : UnitController
 
         if (fsm.CurType == StateType.Attack || fsm.CurType == StateType.Dodge ||
             fsm.CurType == StateType.Hit || fsm.CurType == StateType.Defence ||
-            fsm.CurType == StateType.Die)
+            fsm.CurType == StateType.Die || fsm.CurType == StateType.Skill)
             return;
 
         Vector3 camForward = cameraTransform.forward;
@@ -158,6 +169,26 @@ public class PlayerController : UnitController
             defenceInput = true;
         }
     }
+    public void OnSkill1(InputAction.CallbackContext context)
+    {
+        if (fsm.CurType == StateType.Die) return;
+        if (context.performed)
+        {
+            skillInput = true;
+            SkillType = 1;
+        }
+    }
+    public void OnSkill2(InputAction.CallbackContext context)
+    {
+        if (fsm.CurType == StateType.Die) return;
+        if (context.performed)
+        {
+            skillInput = true;
+            SkillType = 2;
+        }
+    }
+
+
     private void OnAnimatorMove()
     {
         fsm.OnAnimatorMove();
@@ -210,6 +241,25 @@ public class PlayerController : UnitController
         if (audioSource == null || whiffClips == null || whiffClips.Length == 0) return;
         int idx = Random.Range(0, whiffClips.Length);
         audioSource.PlayOneShot(whiffClips[idx]);
+    }
+
+    /// <summary>
+    /// 动画事件调用：在技能动画中切到下一段攻击的 HitBox 配置。
+    /// 使用方式：在动画里每次 DisableHitbox 之后放置此事件。
+    /// </summary>
+    public void NextSkillHit()
+    {
+        skillHitIndex++;
+
+        if (SkillType == 1)
+        {
+            // Skill1: 3 段攻击，最后一段击倒
+            bool isLast = skillHitIndex >= 2;
+            hitBox.damage = isLast ? 30f : 18f;
+            hitBox.knockDown = isLast;
+            hitBox.knockback = isLast ? 0.8f : 0.35f;
+        }
+        // Skill2 是远程刀光，不需要 HitBox 配置
     }
 
     public void PlayHitSound()

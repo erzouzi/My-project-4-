@@ -73,7 +73,10 @@ public class GamePanel : BasePanel
     private void OnPlayerHPChanged(HPChangeData data)
     {
         if (playerHp != null)
+        {
+            playerHp.maxValue = data.max;
             playerHp.value = data.current;
+        }
     }
 
     private void OnEnemyHPChanged(HPChangeData data)

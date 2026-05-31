@@ -44,5 +44,11 @@ public class IdleState : BaseState
         {
             fsm.SwitchType(StateType.Move);
         }
+        if (pc.skillInput)
+        {
+            pc.skillInput = false;
+            fsm.SwitchType(StateType.Skill);
+            return;
+        }
     }
 }
