@@ -4926,6 +4926,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5784954884359614289, guid: 29272cecb0f5a54408e74303816b4538, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1989871900}
+    - targetCorrespondingSourceObject: {fileID: 5784954884359614289, guid: 29272cecb0f5a54408e74303816b4538, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1989871901}
   m_SourcePrefab: {fileID: 100100000, guid: 29272cecb0f5a54408e74303816b4538, type: 3}
 --- !u!95 &661174462 stripped
 Animator:
@@ -11151,6 +11154,18 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References: []
+--- !u!114 &1989871901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989871887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620c68fb7f8a9ec45a3efdf4c14b3d5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1992168226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12182,6 +12197,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 701656377}
     m_Modifications:
+    - target: {fileID: 1573052114422565526, guid: 5a4bd9af0fcb1974fa0e9cc251b97da7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573052114422565526, guid: 5a4bd9af0fcb1974fa0e9cc251b97da7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.11
+      objectReference: {fileID: 0}
     - target: {fileID: 2019311820033465617, guid: 5a4bd9af0fcb1974fa0e9cc251b97da7, type: 3}
       propertyPath: m_Name
       value: playerVFXPos

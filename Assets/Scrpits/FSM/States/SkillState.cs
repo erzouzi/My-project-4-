@@ -40,14 +40,27 @@ public class SkillState : BaseState
 
     public override void OnUpdate()
     {
+        // 防止技能输入泄漏到后续状态导致重复释放技能
+        pc.skillInput = false;
+
         AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        if (pc.attackInput && info.normalizedTime >= 0.7f)
+        {
+            pc.attackInput = false;
+            pc.comboIndex = 0;
+            fsm.SwitchType(StateType.Attack);
+            return;
+        }
+
         if (info.normalizedTime >= 0.85f && pc.setMovement >= 0.1f)
         {
             fsm.SwitchType(StateType.Move);
+            return;
         }
         if (info.normalizedTime >= 0.95f)
         {
             fsm.SwitchType(StateType.Idle);
+            return;
         }
     }
 

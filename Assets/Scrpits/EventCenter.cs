@@ -29,6 +29,55 @@ public struct HPChangeData
     public HPChangeData(float c, float m) { current = c; max = m; }
 }
 
+public enum InventoryChangeType
+{
+    Add,
+    Remove,
+    Updated,
+    Swapped
+}
+/// 背包格子变化事件数据
+public struct InventoryChangeData
+{
+    public int slotIndex;
+    public ItemData itemData;
+    public int stackCount;
+    public InventoryChangeType changeType;
+    public InventoryChangeData(int index, ItemData data, int count, InventoryChangeType type)
+    {
+        slotIndex = index;
+        itemData = data;
+        stackCount = count;
+        changeType = type;
+    }
+}
+
+/// <summary>
+/// 物品被使用事件数据
+/// </summary>
+public struct ItemUsedData
+{
+    public ItemData item;
+    public ItemUsedData(ItemData data)
+    {
+        item = data;
+    }
+}
+
+/// <summary>
+/// 物品被装备事件数据
+/// </summary>
+public struct ItemEquippedData
+{
+    public ItemData item;
+    public int fromSlotIndex;
+    public ItemEquippedData(ItemData data, int index)
+    {
+        item = data;
+        fromSlotIndex = index;
+    }
+}
+
 /// <summary>
 /// 事件中心模块
 /// </summary>
@@ -76,7 +125,9 @@ public class EventCenter
     // ---- 事件名常量 ----
     public const string PLAYER_HP_CHANGED = "PlayerHPChanged";
     public const string ENEMY_HP_CHANGED = "EnemyHPChanged";
-    public const string ENEMY_SPAWN = "EnemySpawn";
-    public const string ENEMY_DIE = "EnemyDie";
+    public const string EVENT_INVENTORY_CHANGED = "InventoryChanged";
+    public const string EVENT_ITEM_USED = "ItemUsed";
+    public const string EVENT_ITEM_EQUIPPED = "ItemEquipped";
+
 }
 

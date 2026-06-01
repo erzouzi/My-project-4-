@@ -58,4 +58,18 @@ public class UnitController : MonoBehaviour
         else if (CompareTag("Enemy"))
             EventCenter.Instance.EventTrigger(EventCenter.ENEMY_HP_CHANGED, data);
     }
+
+    /// <summary>
+    /// 回复HP的方法 通用的 可以靠物品或者技能恢复
+    /// </summary>
+    public void RestoreHP(float amount)
+    {
+        if (amount <= 0 || fsm.CurType == StateType.Die) return;
+        CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
+        var data = new HPChangeData(CurrentHP, MaxHP);
+        if (CompareTag("Player"))
+            EventCenter.Instance.EventTrigger(EventCenter.PLAYER_HP_CHANGED, data);
+        else if (CompareTag("Enemy"))
+            EventCenter.Instance.EventTrigger(EventCenter.ENEMY_HP_CHANGED, data);
+    }
 }

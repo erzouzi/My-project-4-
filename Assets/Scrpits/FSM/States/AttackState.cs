@@ -100,6 +100,13 @@ public class AttackState : BaseState
             fsm.SwitchType(StateType.Attack);
             return;
         }
+        if (pc.skillInput)
+        {
+            pc.skillInput = false;
+            pc.comboIndex = 0;
+            fsm.SwitchType(StateType.Skill);
+            return;
+        }
 
         if (pc.dodgeInput)
         {

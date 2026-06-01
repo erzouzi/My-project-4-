@@ -35,8 +35,23 @@ public class UIManager
             return panelDic[panelName] as T;
         }
 
-        //通过 AssetBundle 加载面板预设体
-        GameObject panelObj = AssetBundleMgr.Instance.LoadRes<GameObject>(UI_AB_NAME, panelName);
+        //加载面板预设体
+        GameObject panelObj = null;
+#if UNITY_EDITOR
+        // 编辑器下直接用 AssetDatabase 加载，改了预制体不用重新打 AB
+        var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/UI/{panelName}.prefab");
+        if (prefab != null)
+            panelObj = GameObject.Instantiate(prefab);
+#endif
+        if (panelObj == null)
+            panelObj = AssetBundleMgr.Instance.LoadRes<GameObject>(UI_AB_NAME, panelName);
+
+        if (panelObj == null)
+        {
+            Debug.LogError($"面板 {panelName} 加载失败！请检查预制体是否存在或已加入 AB 包");
+            return null;
+        }
+
         //把这个对象放到场景中的canvas下面
         panelObj.transform.SetParent(canvasTrans, false);
 

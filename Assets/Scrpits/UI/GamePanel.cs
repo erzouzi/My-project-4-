@@ -14,6 +14,7 @@ public class GamePanel : BasePanel
     public Image monsterTureHP;         // 真实血量（红色，瞬间跳变）
     public float bufferSpeed = 3f;      // 缓冲跟随速度，越大越快
 
+    public Button bagBtn;
     private EnemyController currentEnemy;
     private float enemyFindTimer;
 
@@ -24,6 +25,11 @@ public class GamePanel : BasePanel
 
         // 怪物 HP 通过 EventCenter 监听（无论哪个怪物受伤都更新）
         EventCenter.Instance.AddEventListener<HPChangeData>(EventCenter.ENEMY_HP_CHANGED, OnEnemyHPChanged);
+
+        bagBtn.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ShowPanel<BagPanel>();
+        });
 
         if (monsterHpRoot != null)
             monsterHpRoot.SetActive(false);
