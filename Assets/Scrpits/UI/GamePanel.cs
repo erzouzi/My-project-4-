@@ -15,6 +15,7 @@ public class GamePanel : BasePanel
     public float bufferSpeed = 3f;      // 缓冲跟随速度，越大越快
 
     public Button bagBtn;
+    public Button equipmentBtn;
     private EnemyController currentEnemy;
     private float enemyFindTimer;
 
@@ -29,6 +30,10 @@ public class GamePanel : BasePanel
         bagBtn.onClick.AddListener(() =>
         {
             UIManager.Instance.ShowPanel<BagPanel>();
+        });
+        equipmentBtn.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ShowPanel<EquipmentPanel>();
         });
 
         if (monsterHpRoot != null)

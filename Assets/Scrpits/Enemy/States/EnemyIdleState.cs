@@ -22,6 +22,9 @@ public class EnemyIdleState : BaseState
 
     public override void OnUpdate()
     {
+        // 受击僵直期间不能动
+        if (Time.time < ec.stunnedUntil) return;
+
         if (ec.player != null && ec.PlayerInDetectRange())
             fsm.SwitchType(StateType.Move);
     }

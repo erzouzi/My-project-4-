@@ -24,4 +24,8 @@ public class EnemyData : ScriptableObject
     [Header("战斗决策间隔")]
     public float decisionMin = 1.5f;
     public float decisionMax = 3f;
+
+    [Header("受击僵直")]
+    [Tooltip("受击动画播完后，敌人原地发呆的秒数")]
+    public float hitStunDuration = 0.5f;
 }

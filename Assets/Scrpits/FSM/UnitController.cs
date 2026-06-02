@@ -12,6 +12,10 @@ public class UnitController : MonoBehaviour
     public virtual float MaxHP => 100f;
     public float CurrentHP { get; protected set; }
 
+    // ---- 受击僵直 ----
+    [HideInInspector] public float hitStunDuration = 0f;
+    [HideInInspector] public float stunnedUntil;
+
     public virtual void ApplyRootMotion(Vector3 deltaPosition) { }
     public virtual void Die()
     {

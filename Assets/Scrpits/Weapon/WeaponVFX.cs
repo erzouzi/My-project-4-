@@ -18,7 +18,7 @@ public class WeaponVFX : MonoBehaviour
     public float rangedSlashLifetime = 2f;
     public float rangedSlashDamage = 20f;
     public bool rangedSlashKnockDown = false;
-    public float rangedSlashKnockback = 0.4f;
+    public float rangedSlashKnockback = 1.0f;
 
     /// <summary>
     /// 近战刀光：在 spawnPoint 位置直接生成特效（由动画事件调用）

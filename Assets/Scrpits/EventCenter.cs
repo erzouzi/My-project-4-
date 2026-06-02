@@ -78,6 +78,18 @@ public struct ItemEquippedData
     }
 }
 
+public struct EquipmentChangeData
+{
+    public string slotId; //那个部位
+    public ItemData itemData; //装备的物品 null表示空
+    public EquipmentChangeData(string slotId, ItemData itemData)
+    {
+        this.slotId = slotId;
+        this.itemData = itemData;
+    }
+
+}
+
 /// <summary>
 /// 事件中心模块
 /// </summary>
@@ -128,6 +140,6 @@ public class EventCenter
     public const string EVENT_INVENTORY_CHANGED = "InventoryChanged";
     public const string EVENT_ITEM_USED = "ItemUsed";
     public const string EVENT_ITEM_EQUIPPED = "ItemEquipped";
-
+    public const string EVENT_EQUIPMENT_CHANGED = "EquipmentChanged";
 }
 

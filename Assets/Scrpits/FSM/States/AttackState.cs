@@ -22,49 +22,49 @@ public class AttackState : BaseState
             case 0:
                 pc.hitBox.damage = 10f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.2f;
+                pc.hitBox.knockback = 0.5f;
                 animator.CrossFade("Attack01", 0.05f);
                 break;
             case 1:
                 pc.hitBox.damage = 12f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.25f;
+                pc.hitBox.knockback = 0.55f;
                 animator.CrossFade("Attack02", 0.05f);
                 break;
             case 2:
                 pc.hitBox.damage = 14f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.3f;
+                pc.hitBox.knockback = 0.6f;
                 animator.CrossFade("Attack03", 0.05f);
                 break;
             case 3:
                 pc.hitBox.damage = 16f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.35f;
+                pc.hitBox.knockback = 0.7f;
                 animator.CrossFade("Attack04", 0.05f);
                 break;
             case 4:
                 pc.hitBox.damage = 16f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.35f;
+                pc.hitBox.knockback = 0.7f;
                 animator.CrossFade("Attack05", 0.05f);
                 break;
             case 5:
                 pc.hitBox.damage = 16f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.35f;
+                pc.hitBox.knockback = 0.7f;
                 animator.CrossFade("Attack06", 0.05f);
                 break;
             case 6:
                 pc.hitBox.damage = 16f;
                 pc.hitBox.knockDown = false;
-                pc.hitBox.knockback = 0.4f;
+                pc.hitBox.knockback = 0.8f;
                 animator.CrossFade("Attack07", 0.05f);
                 break;
             case 7:
                 pc.hitBox.damage = 25f;
                 pc.hitBox.knockDown = true;
-                pc.hitBox.knockback = 0.6f;
+                pc.hitBox.knockback = 1.2f;
                 animator.CrossFade("Attack08", 0.05f);
                 break;
             default:

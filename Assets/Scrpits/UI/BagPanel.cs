@@ -64,15 +64,6 @@ public class BagPanel : BasePanel
                     // 全部创建完，按索引排序 + 刷新
                     slotUIs.Sort((a, b) => a.SlotIndex.CompareTo(b.SlotIndex));
                     slotsCreated = true;
-                    // ====== DEBUG: 检查数据和UI ======
-                    Debug.Log($"[BagPanel] Content子物体数: {contentParent.childCount}");
-                    for (int di = 0; di < 3; di++)
-                    {
-                        var sd = InventoryManager.Instance.GetSlot(di);
-                        Debug.Log($"[BagPanel] 格子{di}: item={sd.itemData?.itemName}, count={sd.stackCount}, isEmpty={sd.IsEmpty}");
-                    }
-                    Debug.Log($"[BagPanel] contentParent: {contentParent.name}, GridLayoutHelper: {contentParent.GetComponent<GridLayoutHelper>() != null}");
-                    // ====== DEBUG END ======
                     RefreshAllSlots();
                 }
             });

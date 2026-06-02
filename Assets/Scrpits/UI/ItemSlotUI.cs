@@ -102,9 +102,21 @@ public class ItemSlotUI : MonoBehaviour,
             dragTarget.SetHighlight(false);
         }
 
-        //如果拖到了另一个格子上就交换
-        if (dragTarget != null && dragTarget != dragSource)
+
+        // 检查是否拖到了装备格子
+        EquipmentSlotUI equipTarget = EquipmentSlotUI.HoverTarget;
+        if (equipTarget != null)
         {
+            var slotData = InventoryManager.Instance.GetSlot(dragSource.slotIndex);
+            if (!slotData.IsEmpty && slotData.itemData.itemType == equipTarget.acceptedItemType)
+            {
+                EquipmentManager.Instance.Equip(equipTarget.slotId, slotData.itemData);
+                InventoryManager.Instance.RemoveItem(dragSource.slotIndex, 1);
+            }
+        }
+        else if (dragTarget != null && dragTarget != dragSource)
+        {
+            // 拖到另一个背包格子上 → 交换
             InventoryManager.Instance.SwapSlots(dragSource.slotIndex, dragTarget.slotIndex);
         }
 

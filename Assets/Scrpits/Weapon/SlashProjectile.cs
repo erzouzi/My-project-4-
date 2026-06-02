@@ -18,7 +18,7 @@ public class SlashProjectile : MonoBehaviour
     [Header("伤害")]
     public float damage = 20f;
     public bool knockDown = false;
-    public float knockback = 0.4f;
+    public float knockback = 1.0f;
 
     [Header("穿透")]
     [Tooltip("-1 = 无限穿透，>0 = 穿透 N 个敌人后消失")]
@@ -77,6 +77,18 @@ public class SlashProjectile : MonoBehaviour
 
             enemy.TakeDamage(transform.position, damage, knockDown, knockback);
             hitEnemies.Add(enemy);
+
+            // 伤害数字
+            DamageNumberPool.Show(enemy.transform.position, damage, knockDown);
+
+            // 顿帧
+            float stopTime = knockDown ? 0.12f : 0.04f;
+            HitStopMgr.Instance.Stop(stopTime);
+
+            // 屏幕抖动
+            float shakeIntensity = knockDown ? 0.35f : 0.12f;
+            float shakeDuration = knockDown ? 0.3f : 0.15f;
+            CameraFollow.Trigger(shakeIntensity, shakeDuration);
 
             if (hitClip != null)
                 AudioSource.PlayClipAtPoint(hitClip, transform.position);

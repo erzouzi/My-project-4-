@@ -75,11 +75,7 @@ public class PlayerController : UnitController
         fsm.AddState(StateType.Die, new DeadState(fsm));
         fsm.AddState(StateType.Skill, new SkillState(fsm));
         fsm.SwitchType(StateType.Idle);
-        // 测试代码：加一个物品到背包
-        var potion = Resources.Load<ItemData>("Potion_HP");
-        Debug.Log($"[Player] Potion_HP loaded: {(potion != null ? potion.itemName : "NULL")}");
-        bool added = InventoryManager.Instance.AddItem(potion, 5);
-        Debug.Log($"[Player] AddItem result: {added}, Slot0 item: {InventoryManager.Instance.GetSlot(0).itemData?.itemName} x{InventoryManager.Instance.GetSlot(0).stackCount}");
+
     }
 
     // Update is called once per frame
@@ -92,15 +88,6 @@ public class PlayerController : UnitController
             ref velocity,
             0.1f
         );
-        // 打开/关闭背包
-        if (Keyboard.current != null
-            && Keyboard.current.bKey.wasPressedThisFrame)
-        {
-            if (UIManager.Instance.GetPanel<BagPanel>() != null)
-                UIManager.Instance.HidePanel<BagPanel>();
-            else
-                UIManager.Instance.ShowPanel<BagPanel>();
-        }
 
         fsm.OnUpdate();
 
@@ -158,9 +145,11 @@ public class PlayerController : UnitController
         moveInput = context.ReadValue<Vector2>();
         targetMovement = moveInput.magnitude * 3;
     }
+    private bool IsBagOpen => UIManager.Instance.GetPanel<BagPanel>() != null;
+
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (fsm.CurType == StateType.Die) return;
+        if (fsm.CurType == StateType.Die || IsBagOpen) return;
         if (context.performed)
         {
             attackInput = true;
@@ -168,7 +157,7 @@ public class PlayerController : UnitController
     }
     public void OnDodge(InputAction.CallbackContext context)
     {
-        if (fsm.CurType == StateType.Die) return;
+        if (fsm.CurType == StateType.Die || IsBagOpen) return;
         if (context.performed)
         {
             dodgeInput = true;
@@ -176,7 +165,7 @@ public class PlayerController : UnitController
     }
     public void OnDefence(InputAction.CallbackContext context)
     {
-        if (fsm.CurType == StateType.Die) return;
+        if (fsm.CurType == StateType.Die || IsBagOpen) return;
         if (context.performed)
         {
             defenceInput = true;
@@ -184,7 +173,7 @@ public class PlayerController : UnitController
     }
     public void OnSkill1(InputAction.CallbackContext context)
     {
-        if (fsm.CurType == StateType.Die) return;
+        if (fsm.CurType == StateType.Die || IsBagOpen) return;
         if (fsm.CurType == StateType.Skill) return;
         if (context.performed)
         {
@@ -194,7 +183,7 @@ public class PlayerController : UnitController
     }
     public void OnSkill2(InputAction.CallbackContext context)
     {
-        if (fsm.CurType == StateType.Die) return;
+        if (fsm.CurType == StateType.Die || IsBagOpen) return;
         if (fsm.CurType == StateType.Skill) return;
         if (context.performed)
         {
@@ -272,7 +261,7 @@ public class PlayerController : UnitController
             bool isLast = skillHitIndex >= 2;
             hitBox.damage = isLast ? 30f : 18f;
             hitBox.knockDown = isLast;
-            hitBox.knockback = isLast ? 0.8f : 0.35f;
+            hitBox.knockback = isLast ? 1.5f : 0.7f;
         }
         // Skill2 是远程刀光，不需要 HitBox 配置
     }

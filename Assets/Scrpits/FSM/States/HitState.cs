@@ -46,7 +46,7 @@ public class HitState : BaseState
             knockVelocity = knockDir * unit.knockbackDistance * knockDecay;
         }
 
-        animator.Play(animName);
+        animator.Play(animName, -1, 0f);
     }
 
     public override void OnUpdate()
@@ -86,5 +86,8 @@ public class HitState : BaseState
             animator.applyRootMotion = false;
             useRootMotion = false;
         }
+
+        // 受击僵直：动画播完后敌人发呆一段时间
+        fsm.unitController.stunnedUntil = Time.time + fsm.unitController.hitStunDuration;
     }
 }

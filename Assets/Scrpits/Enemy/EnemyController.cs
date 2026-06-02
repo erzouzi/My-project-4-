@@ -40,6 +40,7 @@ public class EnemyController : UnitController
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         CurrentHP = data.maxHP;
+        hitStunDuration = data.hitStunDuration;
         fsm = new FSMController(animator, this);
         fsm.AddState(StateType.Idle, new EnemyIdleState(fsm));
         fsm.AddState(StateType.Move, new EnemyCombatState(fsm));
